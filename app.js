@@ -1,88 +1,63 @@
 'use strict';
 
-const nombrePelu = 'Peladillos Eladio';
-console.log(nombrePelu);
+const TIENDA = {
 
-let clientesAtendidos = 0;
-console.log('Clientes atendidos: ', clientesAtendidos);
+    nombre: 'Peladillos Eladio',
+    divisa: 'EUR',
+    idioma: 'es-ES',
+    edadMinima: 16
+}
 
-const precioCorte = 8;
-const precioBarba = 8.50;
+const SERVICIOS = [
 
-console.log('Precio corte: ', typeof precioCorte);
-console.log('Precio barba: ', typeof precioBarba);
+    {
+        id: 'clasico',
+        name: 'Corte clásico',
+        precio: 12,
+        duracion: 25
+    },
 
-const nombreCliente = 'Pepito Perez';
-const servicio = 'Corte y barba';
+    {
+        id: 'corte_tinte',
+        name: 'Corte y tinte',
+        precio: 20,
+        duracion: 45
+    },
 
-console.log('Nombre cliente: ', nombreCliente);
-console.log('Servicio: ', servicio);
+    {
+        id: 'barba',
+        name: 'Barba',
+        precio: 8.50,
+        duracion: 15
+    },  
 
-const tieneCita = true;
-const tieneDescuento = false;
+];
 
-console.log('Tiene cita: ', typeof tieneCita);
-console.log('Tiene descuento: ', typeof tieneDescuento);
+const EXTRAS = {
 
-let horaCita;
-console.log('Hora cita: ', horaCita);
-console.log('Hora cita: ', typeof horaCita);
-
-const telCliente = null;
-console.log('Teléfono cliente: ', telCliente);
-console.log('Teléfono cliente: ', typeof telCliente);
-
-const serviciosDisponibles = ['Corte clásico', 'Corte y tinte', 'Barba', 'Barba y bigote'];
-console.log('Servicios disponibles: ', serviciosDisponibles);
-console.log('Servicios disponibles: ', typeof serviciosDisponibles);
-
-console.log('Es un array: ', Array.isArray(serviciosDisponibles));
-
-const cliente = {
-
-    nombre: 'Ezequiel',
-    edad: 30,
-    tieneCita: true
+    lavado : {
+        name: 'Lavado y masaje capilar',
+        precio: 10,
+    },
+    
+    cejas : {
+        name: 'Depilación de cejas',
+        precio: 5,
+    },
 };
 
-console.log('Cliente: ', cliente);
-console.log('Cliente: ', typeof cliente);
-console.log('Cliente: ', cliente.nombre);
+const DESCUENTO_MIEMBROs = 0.05;
+const CODIGO_CUPON = 'ELADIO10';
+const DESCUENTO_CUPON = 0.10;   
 
-let dato = 25;
-console.log('Dato: ', dato);
-console.log('Tipo de dato: ', typeof dato); 
+const serviceGrid = document.querySelector('#serviceGrid');  
+const serviceSelect = document.querySelector('#serviceSelect');
+const bookingForm = document.querySelector('#bookingForm');
+const ticketContent = document.querySelector('#ticketContent');
+const formMessage = document.querySelector('#formMessage');
 
-dato = 'Romualdo';
-console.log('Dato: ', dato);
-console.log('Tipo de dato: ', typeof dato);
+function formatearPrecio(importe) {
 
-dato = true;
-console.log('Dato: ', dato);
-console.log('Tipo de dato: ', typeof dato);
+    Intl.NumberFormat
 
-const precio1 = 20;
-const precio2 = 30;
-const precio3 = '4';
-
-console.log ('Suma: ', precio1 + precio2);
-console.log ('Suma2: ', precio1 + precio2 + precio3); 
-console.log ('Suma3: ', precio3 + precio2 + precio1); 
-
-console.log ('Multiplicación: ', precio1 * precio2);
-console.log ('División: ', precio1 / precio2);
-console.log ('Módulo: ', precio1 % precio2);
-console.log ('Multiplicación: ', precio3 * precio2);
-console.log ('Módulo: ', precio1 % precio3);
-
-const edad = 20;
-
-console.log (edad == 18);
-console.log (edad < 18);
-console.log (edad > 18);
-console.log (edad <= 18);
-console.log (edad >= 18);
-
-console.log (edad === 18);
-console.log (edad < 18);
-console.log (edad > 18);
+}
