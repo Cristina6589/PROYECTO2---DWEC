@@ -56,8 +56,51 @@ const bookingForm = document.querySelector('#bookingForm');
 const ticketContent = document.querySelector('#ticketContent');
 const formMessage = document.querySelector('#formMessage');
 
-function formatearPrecio(importe) {
+function formatMoney(importe){
 
-    Intl.NumberFormat
+const formatter = new Intl.NumberFormat(
+    TIENDA.idioma,
+    {
+        style: 'currency',
+        currency: TIENDA.divisa
+    }
+);
+ 
+return formatter.format(importe);
+
+}
+
+function escapeHtml(value){
+    return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;')  
+}
+
+function buscarServicio(id){
+    return SERVICIOS.find(
+        (servicio) => servicio.id === id
+    );
+}
+
+function renderizarServicios(){
+
+    let cardsHtml = '';
+    let optionHtml = '';
+
+    for (const servicio of SERVICIOS){
+     
+        cardsHtml += `
+            <article class="article">
+            <h3>${servicio.name}</h3>
+            <p>${servicio.duracion} min</p>
+            <span class="price">
+                ${formatMoney(servicio.precio)}
+            </span>
+            </article>
+        `
+}
 
 }
