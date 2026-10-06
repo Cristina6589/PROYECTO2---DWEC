@@ -100,7 +100,55 @@ function renderizarServicios(){
                 ${formatMoney(servicio.precio)}
             </span>
             </article>
-        `
+        `;
+
+        optionHtml += `
+            <option value="${servicio.id}">
+                ${servicio.name} - ${formatMoney(servicio.precio)}
+            </option>
+        `;
+
+        serviceGrid.innerHTML = cardsHtml;
+        serviceSelect.innerHTML = optionHtml;
 }
+
+}
+
+function renderizarServiciosCreate(){
+
+
+    for (const servicio of SERVICIOS){
+
+        const article = document.createElement('article');
+        article.classList.add('card');
+
+        const title = document.createElement('h3');
+        title.textContent = servicio.name;
+
+        const duracion = document.createElement('p');
+        duracion.textContent = `${servicio.duracion} min`;
+
+        const precio = document.createElement('span');
+        precio.classList.add('price');
+        precio.textContent = formatMoney(servicio.precio);
+
+        article.append(
+            title, 
+            duracion, 
+            precio 
+        );
+
+        serviceGrid.append(article);
+}
+
+}
+
+function leerFormulario(){
+
+    const datos = new FormData(bookingForm);
+
+    const nombre = String(datos.get('clientName') ?? '').trim();
+
+    const edad = Number(datos.get('age'));
 
 }
