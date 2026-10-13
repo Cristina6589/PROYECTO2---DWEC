@@ -151,4 +151,79 @@ function leerFormulario(){
 
     const edad = Number(datos.get('age'));
 
+    const extras = datos 
+    .getAll('extras')
+    .map(String);
+
+    const coupon = String(
+        datos.get('coupon') ?? ''
+    )
+        .trim()
+        .toUpperCase();
+
+    const servicioId= String(
+        datos.get('service') ?? ''
+    );
+
+    const dia= String(
+            datos.get('day') ?? ''
+    );
+
+    const esMiembro = datos.get('member') === 'on';
+
+    return {
+
+        nombre,
+        edad,
+        servicioId,
+        dia,
+        extras,
+        coupon,
+        esMiembro
+
+    };
+    
 }
+
+function validarReserva(reserva){
+
+    const errores = [];
+
+    if (!reserva.nombre){
+        errores.push('El nombre es obligatorio');
+    }
+
+    if (Number.isNan(reserva.edad)){
+        errores.push('La edad debe ser un número');
+    } else if (
+        reserva.edad <TIENDA.edadMinima || reserva.edad > 120
+    ) {
+        errores.push(`La edad debe ser un número entre ${TIENDA.edadMinima} y 120`);
+    }
+
+    if (!comprobarServicio(reserva.servicio)){
+        errores.push('El servicio seleccionado no es válido');
+    }
+
+    if (!reserva.dia){
+        errores.push('Selecciona un día para la reserva');
+    }   
+
+    return errores;
+}
+
+function comprobarServicio(id){
+   return SERVICIOS.find(
+        servicio => servicio.id === id
+   ); 
+}
+
+function calcularReserva(reserva){
+    
+    const servicio = buscarServicio(reserva.servicioId);
+
+    let subtotal = servicio?.precio ?? 0;
+}
+
+    
+
