@@ -46,7 +46,7 @@ const EXTRAS = {
     },
 };
 
-const DESCUENTO_MIEMBROs = 0.05;
+const DESCUENTO_MIEMBROS = 0.05;
 const CODIGO_CUPON = 'ELADIO10';
 const DESCUENTO_CUPON = 0.10;   
 
@@ -88,12 +88,16 @@ function buscarServicio(id){
 function renderizarServicios(){
 
     let cardsHtml = '';
-    let optionHtml = '';
+    let optionHtml = `
+    <option value="" selected disabled>
+        - Selecciona un servicio -
+    </option>
+    `;
 
     for (const servicio of SERVICIOS){
      
         cardsHtml += `
-            <article class="article">
+            <article class="card">
             <h3>${servicio.name}</h3>
             <p>${servicio.duracion} min</p>
             <span class="price">
@@ -223,7 +227,80 @@ function calcularReserva(reserva){
     const servicio = buscarServicio(reserva.servicioId);
 
     let subtotal = servicio?.precio ?? 0;
+
+    const extrasDetalle = [];
+
+    for (const extra of reserva.extras){
+        const extra = EXTRAS[extra];
+
+        if (!extra) {
+            continue;
+        }
+
+        subtotal += extra.precio;
+
+        extrasDetalle.push(extra);
+
+        let porcentajeDescuento = 0;
+
+        if (reserva.esMiembro) {
+            porcentajeDescuento += DESCUENTO_MIEMBROS;
+        }
+
+        if (reserva.coupon === CODIGO_CUPON) {
+            porcentajeDescuento += DESCUENTO_CUPON;
+        }
+
+        const descuento = subtotal * porcentajeDescuento;
+
+        const total = subtotal - descuento;
+
+        return {
+            servicio,
+            extrasDetalle,
+            subtotal,
+            porcentajeDescuento,
+            descuento,
+            total
+        };
+    }
 }
 
-    
+function obtenerMensajeEdad(edad){
+   if (edad < TIENDA.edadMinima){
+    return 'No cumples con la edad mínima'
+   } else if (edad >= 65) {
+        return '¡Bienvenido jubilado!'
+   } else {
+        return '¡Contamos contigo!'
+   }
+}
+
+function obtenerMensajeDia(dia){
+    switch (dia) {
+        case 'Lunes':
+            return 'A empezar a tope la semana'
+        case 'Viernes':
+            return 'A acabar a tope la semana'
+        case 'Sábado':
+            return 'Bendito Sábado'
+        default:
+            return 'Un buen día para retocarse'
+    }
+}
+
+function renderizarTicket(){
+    const reserva = leerFormulario();
+
+    const resultado = calcularReserva(reserva);
+
+    const nombreServicio = resultado.servicio?.name ?? 'Sin seleccionar';
+
+    const nombreExtras = resultado.extrasDetalle
+        .map(extra => extra.nombre)
+        .join(', ');
+}
+
+renderizarServicios();
+
 
